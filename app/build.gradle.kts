@@ -10,9 +10,15 @@ plugins {
     alias(gradleLibs.plugins.compose.compiler)
     alias(gradleLibs.plugins.firebase.crashlytics)
     alias(gradleLibs.plugins.google.ksp)
-    alias(gradleLibs.plugins.google.services)
     alias(gradleLibs.plugins.kotlin.android)
     alias(gradleLibs.plugins.kotlin.serialization)
+}
+if (file("google-services.json").let {
+        it.exists() && it.readText().contains(AppConfiguration.appId)
+    }) {
+    plugins {
+        alias(gradleLibs.plugins.google.services)
+    }
 }
 
 val signingProp = file(project.rootProject.file("signing.properties"))
